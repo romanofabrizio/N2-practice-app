@@ -4,7 +4,7 @@ Static app — no build step, no backend. 5,650 questions (5,634 generated + 16 
 
 ## Files
 - `index.html` — the app (vanilla JS)
-- `questions.json` — generated bank (~5,600 questions)
+- `questions.json` — generated bank (~5,600 questions) 
 - `curated.json` — hand-written 読解 (短文/中文/長文/統合理解/情報検索) + dialogue 聴解 (課題理解/ポイント理解/即時応答) + 用法/並べ替え
 - `grammar.json` — searchable N2 grammar reference (149 patterns)
 
