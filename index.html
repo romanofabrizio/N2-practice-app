@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本語能力試験 N2 演習</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Noto+Sans+JP:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#FBFAF7;--ink:#1A1A1E;--ai:#2D4B73;--gold:#E8A33D;--ok:#3E7C5B;--ng:#B5453C;--line:#E3E0D8;--dim:#8A8780;--mid:#55555A}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:'Noto Sans JP',sans-serif;padding:0 14px 64px}
+.wrap{max-width:720px;margin:0 auto}
+.serif{font-family:'Noto Serif JP',serif}
+header{display:flex;align-items:baseline;justify-content:space-between;padding:24px 0 10px;border-bottom:3px double var(--ai);margin-bottom:14px}
+h1{font-family:'Noto Serif JP',serif;font-size:21px;font-weight:700;letter-spacing:.06em;color:var(--ai);margin:0}
+.sub{font-size:12px;color:var(--dim);letter-spacing:.12em}
+nav{display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap}
+nav button{background:transparent;border:1.5px solid var(--line);border-radius:99px;padding:7px 15px;font-size:13.5px;font-weight:600;cursor:pointer;color:var(--mid);font-family:inherit}
+nav button.on{background:var(--ai);border-color:var(--ai);color:var(--paper)}
+nav button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.card{background:#fff;border:1px solid var(--line);border-radius:6px;padding:20px 20px 16px;margin-bottom:14px;box-shadow:0 1px 2px rgba(26,26,30,.04)}
+.tag{display:inline-block;background:var(--ai);color:var(--paper);font-size:12.5px;font-weight:700;padding:3px 12px;border-radius:3px;letter-spacing:.08em;margin-bottom:8px}
+.tag.g{background:var(--gold);color:var(--ink)}
+.instr{font-size:13px;color:var(--mid);border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:14px}
+.qtext{font-family:'Noto Serif JP',serif;font-size:18px;line-height:1.9;margin-bottom:16px}
+.qtext u{text-underline-offset:4px;font-weight:700}
+.passage{font-family:'Noto Serif JP',serif;font-size:15.5px;line-height:2;background:#F6F4EE;border:1px solid var(--line);border-radius:4px;padding:15px 17px;margin-bottom:16px;white-space:pre-wrap}
+.plabel{font-family:'Noto Sans JP',sans-serif;font-size:12px;font-weight:700;color:var(--ai);letter-spacing:.15em;margin-bottom:4px}
+.opt{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;padding:11px 13px;margin-bottom:8px;border-radius:5px;font-family:'Noto Serif JP',serif;font-size:16.5px;line-height:1.7;cursor:pointer;border:1.5px solid #DAD6CC;background:#fff;color:var(--ink)}
+.opt:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.opt .c{color:var(--ai);font-weight:700;flex-shrink:0}
+.opt.correct{border-color:var(--ok);background:#EDF5F0}
+.opt.wrong{border-color:var(--ng);background:#F9EDEB}
+.btn{background:var(--ai);color:var(--paper);border:1.5px solid var(--ai);border-radius:5px;padding:10px 20px;font-size:14.5px;font-weight:600;cursor:pointer;font-family:inherit;letter-spacing:.04em}
+.btn.ghost{background:transparent;color:var(--ai)}
+.btn.gold{background:var(--gold);border-color:var(--gold);color:var(--ink);font-weight:700}
+.btn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.btn:disabled{opacity:.5;cursor:default}
+.exp{background:#F6F4EE;border-left:4px solid var(--gold);padding:11px 15px;font-size:14px;line-height:1.8;margin-top:12px;border-radius:0 4px 4px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}
+.secBtn{background:#fff;border:1.5px solid #DAD6CC;border-radius:6px;padding:13px 12px;text-align:left;cursor:pointer;font-family:inherit;position:relative}
+.secBtn:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.secBtn .t{font-size:10.5px;color:var(--dim);letter-spacing:.08em;margin-bottom:2px}
+.secBtn .l{font-family:'Noto Serif JP',serif;font-size:15.5px;font-weight:700}
+.secBtn .n{font-size:11.5px;color:var(--dim);margin-top:3px}
+.timer{font-variant-numeric:tabular-nums;font-weight:700;font-size:15px;color:var(--ai)}
+.timer.low{color:var(--ng)}
+.row{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #F0EDE5;font-size:14.5px}
+.right{text-align:right}
+.score{font-family:'Noto Serif JP',serif;font-size:42px;font-weight:700;text-align:center}
+.miss{border-top:1px solid #F0EDE5;padding:11px 0}
+.hd2{font-family:'Noto Serif JP',serif;font-size:15.5px;font-weight:700;color:var(--ai);margin:20px 0 10px}
+footer{margin-top:26px;font-size:11px;color:var(--dim);line-height:1.8}
+.bars{display:flex;gap:5px;align-items:flex-end;height:90px;padding:6px 0}
+.bar{flex:1;max-width:36px;background:var(--ai);border-radius:3px 3px 0 0;position:relative;min-height:4px}
+.bar span{position:absolute;top:-18px;left:0;right:0;text-align:center;font-size:10.5px;color:var(--mid);font-variant-numeric:tabular-nums}
+.bar.lo{background:var(--ng)}
+.stat{display:flex;gap:12px}
+.stat>div{flex:1;background:#F6F4EE;border-radius:5px;padding:12px;text-align:center}
+.stat .v{font-family:'Noto Serif JP',serif;font-size:24px;font-weight:700;color:var(--ai)}
+.stat .k{font-size:11.5px;color:var(--mid)}
+.search{width:100%;padding:11px 14px;border:1.5px solid var(--line);border-radius:5px;font-size:15px;font-family:inherit;margin-bottom:12px;background:#fff}
+.gp{border-bottom:1px solid #F0EDE5;padding:12px 0;cursor:pointer}
+.gp .pat{font-family:'Noto Serif JP',serif;font-size:16px;font-weight:700}
+.gp .mn{font-size:13px;color:var(--mid);margin-top:2px}
+.gp .body{display:none;font-size:13.5px;line-height:1.8;margin-top:8px;color:var(--ink)}
+.gp.open .body{display:block}
+.pill{display:inline-block;font-size:10.5px;border:1px solid var(--line);border-radius:99px;padding:1px 9px;color:var(--mid);margin-left:6px;vertical-align:middle}
+.spk{font-weight:700;color:var(--ai)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap" id="app"><header><h1>日本語能力試験 N2 演習</h1><div class="sub">読み込み中…</div></header></div>
+
+<script>
+"use strict";
+/* === Optional: your FastAPI backend for continuously generated questions.
+   Set to e.g. "https://your-srs-app.onrender.com" (no trailing slash). Empty = disabled. === */
+const BACKEND = "";
+const SEC = {
+ kanji:{label:"漢字読み",tag:"問題1",desc:"＿＿の言葉の読み方として最もよいものを一つ選びなさい。",group:"文字・語彙"},
+ hyoki:{label:"表記",tag:"問題2",desc:"＿＿の言葉を漢字で書くとき、最もよいものを一つ選びなさい。",group:"文字・語彙"},
+ bunmyaku:{label:"文脈規定",tag:"問題4",desc:"（　　）に入れるのに最もよいものを一つ選びなさい。",group:"文字・語彙"},
+ iikae:{label:"語彙・意味",tag:"問題5",desc:"＿＿の言葉の意味として最もよいものを一つ選びなさい。",group:"文字・語彙"},
+ yoho:{label:"用法",tag:"問題6",desc:"次の言葉の使い方として最もよいものを一つ選びなさい。",group:"文字・語彙"},
+ bunpo:{label:"文法形式",tag:"問題7",desc:"次の文の（　　）に入れるのに最もよいものを一つ選びなさい。",group:"文法"},
+ narabe:{label:"並べ替え",tag:"問題8",desc:"次の文の ★ に入る最もよいものを一つ選びなさい。",group:"文法"},
+ dokkai_tan:{label:"短文",tag:"問題10",desc:"次の文章を読んで、質問に答えなさい。",group:"読解"},
+ dokkai_chu:{label:"中文",tag:"問題11",desc:"次の文章を読んで、質問に答えなさい。",group:"読解"},
+ dokkai_cho:{label:"長文",tag:"問題12",desc:"次の文章を読んで、質問に答えなさい。",group:"読解"},
+ dokkai_togo:{label:"統合理解",tag:"問題13",desc:"AとBの両方の文章を読んで、質問に答えなさい。",group:"読解"},
+ dokkai_joho:{label:"情報検索",tag:"問題14",desc:"次のお知らせを読んで、質問に答えなさい。",group:"読解"},
+ chokai_kadai:{label:"課題理解",tag:"聴解1",desc:"会話を聞いて、質問に答えなさい。",group:"聴解"},
+ chokai_point:{label:"ポイント理解",tag:"聴解2",desc:"会話を聞いて、質問に答えなさい。",group:"聴解"},
+ chokai_sokuji:{label:"即時応答",tag:"聴解4",desc:"文を聞いて、最もよい応答を一つ選びなさい。",group:"聴解"},
+ chokai:{label:"文の聞き取り",tag:"聴解・演習",desc:"音声を聞いて、内容に合うものを一つ選びなさい。",group:"聴解"},
+};
+const CIRCLED=["①","②","③","④"];
+const GROUP_ORDER=["文字・語彙","文法","読解","聴解"];
+
+let BANK=[], GROUPS=[], GRAMMAR=[];
+const state={tab:"home",screen:"list",qs:[],cur:0,answers:[],picked:null,revealed:false,timeLeft:null,timer:null,mode:null,gOpen:{},gQuery:""};
+
+/* ---------- persistence ---------- */
+const LS={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d}catch(e){return d}},
+          set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+function hash(s){let h=5381;for(let i=0;i<s.length;i++){h=((h<<5)+h+s.charCodeAt(i))|0}return (h>>>0).toString(36)}
+function qid(q){return q.id||(q.id=hash((q.q||"")+"|"+q.opts.join("|")))}
+function markSeen(q){const s=LS.get("n2_seen",{});s[qid(q)]=Date.now();LS.set("n2_seen",s)}
+function addMiss(q){const m=LS.get("n2_missed",{});const id=qid(q);
+  const e=m[id]||{q:packQ(q),wrong:0,streak:0};e.wrong++;e.streak=0;e.last=Date.now();m[id]=e;LS.set("n2_missed",m)}
+function creditMiss(q){const m=LS.get("n2_missed",{});const id=qid(q);
+  if(m[id]){m[id].streak=(m[id].streak||0)+1;m[id].last=Date.now();
+    if(m[id].streak>=2)delete m[id]; LS.set("n2_missed",m)}}
+function packQ(q){const{id,q:qq,opts,a,exp,s,passage,passages,plabel,audio,order,en}=q;
+  return {id,q:qq,opts,a,exp,s,passage,passages,plabel,audio,order,en}}
+function addHistory(entry){const h=LS.get("n2_history",[]);h.push(entry);LS.set("n2_history",h.slice(-60))}
+
+/* ---------- helpers ---------- */
+function shuffle(a){a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function prep(q){qid(q);const idx=q.opts.map((_,i)=>i);const p=shuffle(idx);
+  return{...q,opts:p.map(i=>q.opts[i]),a:p.indexOf(q.a)}}
+function esc(s){return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function renderU(s){return esc(s).replace(/&lt;u&gt;/g,"<u>").replace(/&lt;\/u&gt;/g,"</u>")}
+function fmt(s){return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")}
+function pool(key){return BANK.filter(q=>q.s===key)}
+/* prioritize unseen */
+function sample(key,n){const seen=LS.get("n2_seen",{});const p=pool(key);
+  const unseen=shuffle(p.filter(q=>!seen[qid(q)]));const rest=shuffle(p.filter(q=>seen[qid(q)]));
+  return unseen.concat(rest).slice(0,n)}
+function sampleGroups(key,n){const seen=LS.get("n2_seen",{});
+  const g=GROUPS.filter(x=>x.s===key);
+  const unseen=shuffle(g.filter(x=>!x.questions.every(q=>seen[hash((q.q||"")+"|"+q.opts.join("|"))])));
+  const rest=shuffle(g.filter(x=>!unseen.includes(x)));
+  return unseen.concat(rest).slice(0,n)}
+function flattenGroups(gs){const out=[];
+  for(const g of gs){const total=g.questions.length;
+    g.questions.forEach((q,i)=>{out.push({...q,s:g.s,passage:g.passage,passages:g.passages,
+      plabel:total>1?`問${i+1}／${total}`:null,showPassage:i===0||total>1})})}
+  return out}
+
+/* ---------- speech ---------- */
+function stopSpeak(){window.speechSynthesis&&window.speechSynthesis.cancel()}
+function jpVoice(){const vs=window.speechSynthesis.getVoices();return vs.find(v=>v.lang&&v.lang.startsWith("ja"))}
+function speak(audio,rate){
+  stopSpeak();const parts=Array.isArray(audio)?audio:[{sp:"M",t:audio}];
+  const v=jpVoice();
+  parts.forEach(p=>{const u=new SpeechSynthesisUtterance(p.t);u.lang="ja-JP";u.rate=rate;
+    u.pitch=p.sp==="F"?1.35:0.85;if(v)u.voice=v;window.speechSynthesis.speak(u)})}
+
+/* ---------- quiz flow ---------- */
+function startQuiz(qs,mode,minutes){
+  state.qs=qs;state.mode=mode;state.cur=0;state.answers=[];state.picked=null;state.revealed=false;
+  state.timeLeft=minutes?minutes*60:null;state.screen="quiz";
+  if(minutes)tick();render()}
+function startDrill(key){
+  if(key.startsWith("dokkai_")){startQuiz(flattenGroups(sampleGroups(key,4)).map(prep),key,null)}
+  else{startQuiz(sample(key,key==="chokai_sokuji"?12:15).map(prep),key,null)}}
+function startMock(){
+  const qs=[
+    ...sample("kanji",4),...sample("hyoki",3),...sample("bunmyaku",4),...sample("iikae",3),...sample("yoho",2),
+    ...sample("bunpo",5),...sample("narabe",2),
+    ...flattenGroups(sampleGroups("dokkai_tan",2)),
+    ...flattenGroups(sampleGroups("dokkai_chu",1)),
+    ...flattenGroups(sampleGroups("dokkai_joho",1)),
+    ...sample("chokai_kadai",2),...sample("chokai_point",2),...sample("chokai_sokuji",3),
+  ].map(prep);
+  startQuiz(qs,"mock",45)}
+function startReview(){
+  const m=LS.get("n2_missed",{});
+  const qs=shuffle(Object.values(m).sort((a,b)=>b.wrong-a.wrong).slice(0,30).map(e=>e.q)).map(prep);
+  if(!qs.length){alert("復習する問題はありません。");return}
+  startQuiz(qs,"review",null)}
+function tick(){clearTimeout(state.timer);
+  if(state.timeLeft===null||state.screen!=="quiz")return;
+  if(state.timeLeft<=0){finish();return}
+  state.timer=setTimeout(()=>{state.timeLeft--;
+    const el=document.getElementById("timer");
+    if(el){el.textContent="⏱ "+fmt(state.timeLeft);el.className="timer"+(state.timeLeft<180?" low":"")}
+    tick()},1000)}
+function choose(i){if(state.revealed)return;
+  state.picked=i;state.revealed=true;
+  const q=state.qs[state.cur];const ok=i===q.a;
+  state.answers.push({q,picked:i,correct:ok});
+  markSeen(q);
+  if(state.mode==="review"){ok?creditMiss(q):addMiss(q)}
+  else{if(!ok)addMiss(q)}
+  render()}
+function next(){stopSpeak();
+  if(state.cur+1>=state.qs.length){finish()}
+  else{state.cur++;state.picked=null;state.revealed=false;render()}}
+function finish(){clearTimeout(state.timer);stopSpeak();
+  const total=state.answers.length,correct=state.answers.filter(a=>a.correct).length;
+  if(total>0&&state.mode!=="review")addHistory({d:Date.now(),mode:state.mode,c:correct,t:total});
+  state.screen="results";render()}
+function goList(){stopSpeak();clearTimeout(state.timer);state.screen="list";render()}
+function setTab(t){state.tab=t;state.screen="list";render()}
+function exportMisses(){
+  const m=LS.get("n2_missed",{});
+  const arr=Object.values(m).map(e=>({section:(SEC[e.q.s]||{}).label||e.q.s,
+    question:(e.q.passage?e.q.passage+"\n\n":"")+(e.q.q||"").replace(/<\/?u>/g,"＿"),
+    correct_answer:e.q.opts[e.q.a],explanation:e.q.exp||"",times_missed:e.wrong}));
+  const blob=new Blob([JSON.stringify(arr,null,2)],{type:"application/json"});
+  const url=URL.createObjectURL(blob);const el=document.createElement("a");
+  el.href=url;el.download="n2_misses.json";el.click();URL.revokeObjectURL(url)}
+function resetData(){if(confirm("学習記録（履歴・復習・既出情報）をすべて消去しますか？")){
+  ["n2_seen","n2_missed","n2_history"].forEach(k=>localStorage.removeItem(k));render()}}
+function toggleG(i){state.gOpen[i]=!state.gOpen[i];render()}
+function onGQuery(v){state.gQuery=v;renderGrammarList()}
+
+/* ---------- rendering ---------- */
+function header(right){return `<header><h1>N2 演習</h1><div style="display:flex;gap:14px;align-items:baseline">${right||""}</div></header>`}
+function navBar(){const tabs=[["home","ホーム"],["drill","ドリル"],["review","復習"],["grammar","文法辞典"]];
+  return `<nav>${tabs.map(([k,l])=>`<button class="${state.tab===k?"on":""}" onclick="setTab('${k}')">${l}</button>`).join("")}</nav>`}
+
+function audioBlock(q){if(!q.audio)return "";
+  return `<div style="display:flex;gap:9px;margin-bottom:16px;flex-wrap:wrap">
+    <button class="btn" onclick='speak(${JSON.stringify(q.audio)},1.0)'>▶ 再生</button>
+    <button class="btn ghost" onclick='speak(${JSON.stringify(q.audio)},0.75)'>▶ ゆっくり</button>
+  </div>`}
+function scriptBlock(q){if(!q.audio)return "";
+  const parts=Array.isArray(q.audio)?q.audio:[{sp:"",t:q.audio}];
+  return `<div style="margin-bottom:6px;color:var(--mid)"><b>スクリプト：</b><br>`+
+    parts.map(p=>`${p.sp?`<span class="spk">${p.sp==="F"?"女":"男"}：</span>`:""}${esc(p.t)}`).join("<br>")+`</div>`}
+function passageBlock(q){let h="";
+  if(q.passages)h=q.passages.map(p=>`<div class="passage"><div class="plabel">${esc(p.label)}</div>${esc(p.text)}</div>`).join("");
+  else if(q.passage)h=`<div class="passage">${esc(q.passage)}</div>`;
+  return h}
+
+function render(){
+  const app=document.getElementById("app");
+  if(state.screen==="quiz"){renderQuiz(app);return}
+  if(state.screen==="results"){renderResults(app);return}
+  if(state.tab==="home")renderHome(app);
+  else if(state.tab==="drill")renderDrill(app);
+  else if(state.tab==="review")renderReview(app);
+  else if(state.tab==="grammar")renderGrammar(app);
+}
+
+function renderHome(app){
+  const hist=LS.get("n2_history",[]);
+  const missed=Object.keys(LS.get("n2_missed",{})).length;
+  const seen=Object.keys(LS.get("n2_seen",{})).length;
+  const mocks=hist.filter(h=>h.mode==="mock");
+  const last12=hist.slice(-12);
+  const bars=last12.length?`<div class="bars">${last12.map(h=>{const p=Math.round(h.c/h.t*100);
+    return `<div class="bar ${p<60?"lo":""}" style="height:${Math.max(5,p*0.82)}px" title="${new Date(h.d).toLocaleDateString()}"><span>${p}</span></div>`}).join("")}</div>
+    <div class="sub" style="text-align:center">直近のセッション正答率（％）</div>`
+    :`<p style="font-size:14px;color:var(--mid)">まだ記録がありません。ドリルか模擬テストを始めましょう。</p>`;
+  app.innerHTML=header(`<span class="sub">${BANK.length.toLocaleString()}問＋読解${GROUPS.length}題</span>`)+navBar()+
+  `<div class="stat" style="margin-bottom:14px">
+    <div><div class="v">${seen.toLocaleString()}</div><div class="k">学習済み</div></div>
+    <div><div class="v">${missed}</div><div class="k">要復習</div></div>
+    <div><div class="v">${mocks.length}</div><div class="k">模擬テスト</div></div>
+  </div>
+  <div class="card">${bars}</div>
+  <div class="card">
+    <div class="serif" style="font-size:16.5px;font-weight:700;margin-bottom:6px">模擬テスト（45分・約38問）</div>
+    <p style="font-size:13.5px;color:var(--mid);line-height:1.8;margin:0 0 12px">語彙→文法→読解→聴解を本試験の順で。読解は複数問付きの本文、聴解は会話形式。</p>
+    <button class="btn gold" onclick="startMock()">開始する</button>
+  </div>
+  <div class="card">
+    <div class="serif" style="font-size:16.5px;font-weight:700;margin-bottom:6px">復習モード</div>
+    <p style="font-size:13.5px;color:var(--mid);line-height:1.8;margin:0 0 12px">間違えた問題だけを出題。2回連続で正解すると復習リストから外れます。</p>
+    <button class="btn" onclick="startReview()" ${missed?"":"disabled"}>復習を始める（${missed}問）</button>
+  </div>
+  <footer>データはこの端末のブラウザにのみ保存されます。
+  <a href="#" onclick="exportMisses();return false">誤答をJSONで書き出す</a>／<a href="#" onclick="resetData();return false">記録を消去</a><br>
+  出典（改変あり）：elzup/jlpt-word-list（EDRDG）／jkindrix/japanese-language-data（CC-BY-SA 4.0）／例文：Tatoeba（CC-BY 2.0 FR）。読解・聴解の会話・用法・並べ替えはオリジナル。JLPTはJEES・国際交流基金の商標であり、本アプリは非公式の学習ツールです。</footer>`}
+
+async function genMore(section){
+  const btn=document.getElementById("genbtn");
+  if(btn){btn.disabled=true;btn.textContent="生成中…（30秒ほど）"}
+  try{
+    const r=await fetch(BACKEND+"/n2/generate?section="+section+"&n=3",{method:"POST"});
+    const d=await r.json();
+    alert(d.stored+"問を追加しました。再読み込みすると出題に反映されます。");
+    location.reload();
+  }catch(e){alert("生成に失敗しました："+e.message);if(btn){btn.disabled=false;btn.textContent="新しい問題を生成"}}}
+function renderDrill(app){
+  const genUI=BACKEND?`<div class="card"><div class="serif" style="font-size:15px;font-weight:700;margin-bottom:6px">問題の追加生成（Claude API）</div>
+    <p style="font-size:13px;color:var(--mid);margin:0 0 10px;line-height:1.7">読解・聴解などを3題ずつ生成してバックエンドに保存します。生成問題（<span class="pill">生成</span>付き）は未検証のため、おかしな問題は結果画面から報告・削除してください。</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <select id="gensec" class="search" style="margin:0;max-width:220px">
+        <option value="dokkai_tan">短文読解</option><option value="dokkai_chu">中文読解</option>
+        <option value="dokkai_joho">情報検索</option><option value="chokai_kadai">課題理解</option>
+        <option value="chokai_point">ポイント理解</option><option value="chokai_sokuji">即時応答</option>
+        <option value="yoho">用法</option><option value="narabe">並べ替え</option>
+      </select>
+      <button id="genbtn" class="btn gold" onclick="genMore(document.getElementById('gensec').value)">新しい問題を生成</button>
+    </div></div>`:"";
+  app.innerHTML=header(``)+navBar()+genUI+GROUP_ORDER.map(g=>{
+    const keys=Object.keys(SEC).filter(k=>SEC[k].group===g);
+    return `<div class="hd2">${g}</div><div class="grid">${keys.map(k=>{
+      const n=k.startsWith("dokkai_")?GROUPS.filter(x=>x.s===k).length:pool(k).length;
+      if(!n)return "";
+      const unit=k.startsWith("dokkai_")?"題":"問";
+      return `<button class="secBtn" onclick="startDrill('${k}')">
+        <div class="t">${SEC[k].tag}</div><div class="l">${SEC[k].label}</div>
+        <div class="n">${n.toLocaleString()}${unit}</div></button>`}).join("")}</div>`}).join("")}
+
+function renderReview(app){
+  const m=LS.get("n2_missed",{});
+  const list=Object.values(m).sort((a,b)=>b.wrong-a.wrong);
+  app.innerHTML=header(``)+navBar()+
+  `<div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+      <div class="serif" style="font-size:16px;font-weight:700">要復習リスト（${list.length}問）</div>
+      <div style="display:flex;gap:8px">
+        <button class="btn" onclick="startReview()" ${list.length?"":"disabled"}>出題する</button>
+        <button class="btn ghost" onclick="exportMisses()" ${list.length?"":"disabled"}>JSON</button>
+      </div>
+    </div>
+    ${list.length?list.slice(0,50).map(e=>`<div class="miss">
+      <div class="serif" style="font-size:15px">${renderU(e.q.q||"")}
+        <span class="pill">${(SEC[e.q.s]||{}).label||""}・${e.wrong}回</span></div>
+      <div style="font-size:13.5px;color:var(--ok);margin-top:3px">○ ${esc(e.q.opts[e.q.a])}</div>
+    </div>`).join("")
+    :`<p style="font-size:14px;color:var(--mid)">間違えた問題はここに溜まります。2回連続正解で卒業です。</p>`}
+  </div>`}
+
+function renderGrammar(app){
+  app.innerHTML=header(``)+navBar()+
+  `<input class="search" placeholder="文法を検索（例：〜わけ、にあたって、cannot）" value="${esc(state.gQuery)}" oninput="onGQuery(this.value)">
+  <div class="card" id="glist"></div>`;
+  renderGrammarList()}
+function renderGrammarList(){
+  const el=document.getElementById("glist");if(!el)return;
+  const q=state.gQuery.toLowerCase();
+  const hits=GRAMMAR.map((g,i)=>[g,i]).filter(([g])=>!q||g.pattern.toLowerCase().includes(q)||g.meaning.toLowerCase().includes(q)||g.detail.toLowerCase().includes(q));
+  el.innerHTML=`<div class="sub" style="margin-bottom:6px">${hits.length} / ${GRAMMAR.length} 項目（出典：jkindrix/japanese-language-data, CC-BY-SA 4.0）</div>`+
+   hits.slice(0,60).map(([g,i])=>`<div class="gp ${state.gOpen[i]?"open":""}" onclick="toggleG(${i})">
+    <div class="pat">${esc(g.pattern)}${g.formality?`<span class="pill">${esc(g.formality)}</span>`:""}</div>
+    <div class="mn">${esc(g.meaning)}</div>
+    <div class="body">
+      ${g.detail?`<p style="margin:6px 0">${esc(g.detail)}</p>`:""}
+      ${g.formation?`<p style="margin:6px 0"><b>接続：</b>${esc(g.formation)}</p>`:""}
+      ${(g.notes||[]).length?`<p style="margin:6px 0">${g.notes.map(esc).join("<br>")}</p>`:""}
+      ${(g.examples||[]).map(e=>`<p class="serif" style="margin:6px 0">${esc(e.jp)}<br><span style="color:var(--dim);font-family:'Noto Sans JP'">${esc(e.en)}</span></p>`).join("")}
+    </div></div>`).join("")+(hits.length>60?`<div class="sub" style="margin-top:8px">…検索で絞り込んでください</div>`:"")}
+
+function renderQuiz(app){
+  const q=state.qs[state.cur];const sec=SEC[q.s]||{label:"演習",tag:"演習",desc:""};
+  const opts=q.opts.map((o,i)=>{let cls="opt";
+    if(state.revealed){if(i===q.a)cls+=" correct";else if(i===state.picked)cls+=" wrong"}
+    return `<button class="${cls}" onclick="choose(${i})"><span class="c">${CIRCLED[i]||"○"}</span><span>${esc(o)}</span></button>`}).join("");
+  app.innerHTML=header(
+    (state.timeLeft!==null?`<span class="timer${state.timeLeft<180?" low":""}" id="timer">⏱ ${fmt(state.timeLeft)}</span>`:"")+
+    `<span class="sub">${state.cur+1} / ${state.qs.length}</span>`)+
+  `<div class="card">
+    <span class="tag ${state.mode==="review"?"g":""}">${state.mode==="review"?"復習・"+sec.tag:sec.tag}</span>${q.gen?`<span class="pill">生成</span>`:""}
+    <div class="instr">${esc(sec.desc)}</div>
+    ${passageBlock(q)}
+    ${audioBlock(q)}
+    ${q.plabel?`<div class="plabel">${esc(q.plabel)}</div>`:""}
+    <div class="qtext">${renderU(q.q||"")}</div>
+    ${opts}
+    ${state.revealed?`<div class="exp">
+      ${q.order?`<div style="margin-bottom:6px"><b>正しい順：</b>${esc(q.order)}</div>`:""}
+      ${scriptBlock(q)}
+      ${esc(q.exp||"")}
+      ${q.en?`<div style="margin-top:6px;color:var(--mid)">EN: ${esc(q.en)}</div>`:""}
+    </div>`:""}
+  </div>
+  ${state.revealed?`<div class="right"><button class="btn" onclick="next()">${state.cur+1>=state.qs.length?"結果を見る":"次へ →"}</button></div>`:""}
+  <div style="margin-top:12px"><button class="btn ghost" onclick="goList()">中断する</button></div>`}
+
+function renderResults(app){
+  const total=state.answers.length,correct=state.answers.filter(a=>a.correct).length;
+  const pct=total?Math.round(correct/total*100):0;
+  const misses=state.answers.filter(a=>!a.correct);
+  const bySec={};state.answers.forEach(a=>{const k=a.q.s;bySec[k]=bySec[k]||{c:0,t:0};bySec[k].t++;if(a.correct)bySec[k].c++});
+  app.innerHTML=header(`<span class="sub">${state.mode==="mock"?"模擬テスト":state.mode==="review"?"復習":(SEC[state.mode]||{}).label||""}</span>`)+
+  `<div class="card" style="text-align:center">
+    <div class="score" style="color:${pct>=60?"var(--ok)":"var(--ng)"}">${correct} <span style="font-size:19px;color:var(--dim)">/ ${total}</span></div>
+    <div style="font-size:13.5px;color:var(--mid)">正答率 ${pct}%（N2合格ラインの目安：各科目で約6割）</div>
+  </div>
+  <div class="card">
+    <div class="serif" style="font-size:15.5px;font-weight:700;margin-bottom:8px">セクション別</div>
+    ${Object.entries(bySec).map(([k,v])=>`<div class="row"><span class="serif">${(SEC[k]||{}).label||k}</span>
+      <span style="font-variant-numeric:tabular-nums;color:${v.c===v.t?"var(--ok)":"var(--ink)"}">${v.c} / ${v.t}</span></div>`).join("")}
+  </div>
+  ${misses.length?`<div class="card">
+    <div class="serif" style="font-size:15.5px;font-weight:700;margin-bottom:10px">間違えた問題（復習リストに追加済み）</div>
+    ${misses.map(a=>`<div class="miss">
+      <div class="serif" style="font-size:15px;margin-bottom:3px">${renderU(a.q.q||"")}</div>
+      <div style="font-size:13.5px"><span style="color:var(--ng)">✗ ${esc(a.q.opts[a.picked])}</span>　→　<span style="color:var(--ok);font-weight:600">○ ${esc(a.q.opts[a.q.a])}</span></div>
+      <div style="font-size:13px;color:var(--mid);margin-top:3px;line-height:1.7">${esc(a.q.exp||"")}</div>
+      ${a.q.srv_id&&BACKEND?`<a href="#" style="font-size:12px;color:var(--ng)" onclick="fetch(BACKEND+'/n2/questions/${a.q.srv_id}',{method:'DELETE'}).then(()=>{this.textContent='削除済み'});return false">この生成問題を削除（問題がおかしい場合）</a>`:""}
+    </div>`).join("")}
+  </div>`:""}
+  <div style="display:flex;gap:9px">
+    <button class="btn" onclick="setTab('home')">ホームへ</button>
+    ${state.mode!=="mock"&&state.mode!=="review"?`<button class="btn ghost" onclick="startDrill('${state.mode}')">もう一度</button>`:""}
+  </div>`}
+
+/* ---------- boot ---------- */
+window.speechSynthesis&&window.speechSynthesis.getVoices();
+const fetches=[
+  fetch("questions.json").then(r=>r.json()),
+  fetch("curated.json").then(r=>r.json()),
+  fetch("grammar.json").then(r=>r.json()),
+];
+if(BACKEND)fetches.push(fetch(BACKEND+"/n2/questions").then(r=>r.json()));
+Promise.allSettled(fetches).then(([gen,cur,gr,srv])=>{
+  if(gen.status==="fulfilled")BANK=gen.value.questions;
+  if(cur.status==="fulfilled"){GROUPS=cur.value.groups;BANK=BANK.concat(cur.value.items)}
+  if(gr.status==="fulfilled")GRAMMAR=gr.value.grammar;
+  if(srv&&srv.status==="fulfilled"){GROUPS=GROUPS.concat(srv.value.groups||[]);BANK=BANK.concat(srv.value.items||[])}
+  BANK.forEach(qid);
+  GROUPS.forEach(g=>g.questions.forEach(q=>qid(q)));
+  render();
+}).catch(e=>{document.getElementById("app").innerHTML="<p>データの読み込みに失敗しました。questions.json / curated.json / grammar.json が同じフォルダにあるか確認してください。</p>"});
+</script>
+</body>
+</html>
